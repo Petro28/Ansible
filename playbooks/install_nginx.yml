@@ -1,11 +1,11 @@
 - name: Install Nginx web server
   hosts: servers
-  become: yes
+  become: true
 
   tasks:
     - name: Update apt cache
       ansible.builtin.apt:
-        update_cache: yes
+        update_cache: true
 
     - name: Install Nginx
       ansible.builtin.apt:
@@ -23,4 +23,4 @@
       ansible.builtin.service:
         name: nginx
         state: started
-        enabled: yes
+        enabled: true
