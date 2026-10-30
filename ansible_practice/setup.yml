@@ -1,0 +1,32 @@
+---
+- name: Basic Linux setup
+  hosts: servers
+  become: true
+  become_method: sudo
+
+  tasks:
+    - name: Install basic packages
+      ansible.builtin.apt:
+        name:
+          - curl
+          - wget
+          - git
+          - vim
+        state: present
+        update_cache: true
+
+    - name: Create test.txt
+      ansible.builtin.file:
+        path: "/home/{{ ansible_user }}/test.txt"
+        state: touch
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0600'
+
+    - name: Write text to test.txt
+      ansible.builtin.copy:
+        content: "Hello from Ansible!\n"
+        dest: "/home/{{ ansible_user }}/test.txt"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0600'
