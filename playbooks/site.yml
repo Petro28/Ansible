@@ -1,0 +1,21 @@
+---
+- name: Prepare all servers
+  hosts: all
+  become: true
+  roles:
+    - common
+    - firewall
+
+- name: Configure backend
+  hosts: backend
+  become: true
+  roles:
+    - docker
+    - postgresql
+    - cat_dog_app
+
+- name: Configure frontend
+  hosts: frontend
+  become: true
+  roles:
+    - nginx
