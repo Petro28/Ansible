@@ -1,0 +1,32 @@
+server {
+    listen 80;
+    server_name {{ nginx_cat_hostname }} {{ nginx_dog_hostname }};
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name {{ nginx_cat_hostname }} {{ nginx_dog_hostname }};
+
+    root $site_root;
+    index index.html;
+
+    ssl_certificate {{ nginx_ssl_directory }}/cats-dogs.crt;
+    ssl_certificate_key {{ nginx_ssl_directory }}/cats-dogs.key;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location /api/ {
+        rewrite ^/api/(.*)$ /$1 break;
+
+        proxy_pass $api_backend;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

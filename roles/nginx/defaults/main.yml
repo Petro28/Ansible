@@ -1,0 +1,15 @@
+---
+nginx_package: nginx
+nginx_version: "1.28.3-2ubuntu1.12"
+
+nginx_cat_root: /var/www/cat-site
+nginx_dog_root: /var/www/dog-site
+
+nginx_ssl_directory: /etc/nginx/ssl
+
+nginx_backend_host: 192.168.0.21
+nginx_cat_api_port: 8080
+nginx_dog_api_port: 8081
+
+nginx_cat_hostname: cats.example.local
+nginx_dog_hostname: dogs.example.local

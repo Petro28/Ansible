@@ -11,7 +11,6 @@
   become: true
   roles:
     - docker
-    - postgresql
     - cat_dog_app
 
 - name: Configure frontend

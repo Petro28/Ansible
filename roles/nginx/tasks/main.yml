@@ -1,0 +1,98 @@
+
+---
+- name: Install pinned Nginx version
+  ansible.builtin.apt:
+    name: "{{ nginx_package }}={{ nginx_version }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+    allow_downgrade: true
+
+- name: Create frontend directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: "0755"
+  loop:
+    - "{{ nginx_cat_root }}"
+    - "{{ nginx_dog_root }}"
+
+- name: Create Nginx SSL directory
+  ansible.builtin.file:
+    path: "{{ nginx_ssl_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0700"
+
+- name: Deploy cat frontend
+  ansible.builtin.copy:
+    src: frontend/cat-site/
+    dest: "{{ nginx_cat_root }}/"
+    owner: www-data
+    group: www-data
+    mode: "0755"
+
+- name: Deploy dog frontend
+  ansible.builtin.copy:
+    src: frontend/dog-site/
+    dest: "{{ nginx_dog_root }}/"
+    owner: www-data
+    group: www-data
+    mode: "0755"
+
+- name: Deploy TLS certificate
+  ansible.builtin.copy:
+    src: ssl/cats-dogs.crt
+    dest: "{{ nginx_ssl_directory }}/cats-dogs.crt"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Deploy TLS private key
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../roles/files/frontend/ssl/cats-dogs.key"
+    dest: "{{ nginx_ssl_directory }}/cats-dogs.key"
+    owner: root
+    group: root
+    mode: "0600"
+  no_log: true
+
+- name: Deploy main Nginx configuration
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true
+  notify: Reload Nginx
+
+- name: Deploy Cat and Dog virtual hosts
+  ansible.builtin.template:
+    src: cats-dogs.conf.j2
+    dest: /etc/nginx/conf.d/cats-dogs.conf
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true
+  notify: Reload Nginx
+
+- name: Disable default Nginx site
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: Reload Nginx
+
+- name: Validate Nginx configuration
+  ansible.builtin.command: nginx -t
+  changed_when: false
+
+- name: Ensure Nginx is enabled and running
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+
