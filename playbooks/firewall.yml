@@ -1,0 +1,6 @@
+---
+- name: Configure firewall on backend
+  hosts: backend
+  become: true
+  roles:
+    - firewall

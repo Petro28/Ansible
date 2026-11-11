@@ -1,7 +1,8 @@
+
 const button = document.querySelector("#generate");
-const dog = document.querySelector("#dog");
-const name = document.querySelector("#name");
-const description = document.querySelector("#description");
+const result = document.querySelector("#result");
+const name = document.querySelector("#cat-name");
+const description = document.querySelector("#cat-description");
 const error = document.querySelector("#error");
 
 button.addEventListener("click", async () => {
@@ -9,18 +10,23 @@ button.addEventListener("click", async () => {
   error.hidden = true;
 
   try {
-    const response = await fetch("/dogs-api/dog");
-    if (!response.ok) throw new Error("Could not load a dog");
+    const response = await fetch("/api/cat");
+
+    if (!response.ok) {
+      throw new Error("Could not load a cat");
+    }
 
     const data = await response.json();
+
     name.textContent = data.name;
     description.textContent = data.description;
-    dog.hidden = false;
+    result.hidden = false;
   } catch {
-    dog.hidden = true;
-    error.textContent = "Could not load a dog. Try again.";
+    result.hidden = true;
+    error.textContent = "Could not load a cat. Try again.";
     error.hidden = false;
   } finally {
     button.disabled = false;
   }
 });
+

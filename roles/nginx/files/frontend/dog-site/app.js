@@ -1,3 +1,4 @@
+
 const button = document.querySelector("#generate");
 const dog = document.querySelector("#dog");
 const name = document.querySelector("#name");
@@ -9,7 +10,7 @@ button.addEventListener("click", async () => {
   error.hidden = true;
 
   try {
-    const response = await fetch("/dogs-api/dog");
+    const response = await fetch("/api/dog");
 
     if (!response.ok) {
       throw new Error("Could not load a dog");
@@ -28,3 +29,4 @@ button.addEventListener("click", async () => {
     button.disabled = false;
   }
 });
+

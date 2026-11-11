@@ -1,0 +1,10 @@
+---
+cat_dog_app_directory: /opt/cat-dog-app
+
+cat_api_port: 8080
+dog_api_port: 8081
+
+cat_api_bind_address: "{{ backend_ip }}"
+dog_api_bind_address: "{{ backend_ip }}"
+
+postgres_data_directory: /opt/my-db/postgres/data

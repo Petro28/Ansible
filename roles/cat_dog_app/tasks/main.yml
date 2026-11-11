@@ -1,0 +1,70 @@
+---
+- name: Create application directory
+  ansible.builtin.file:
+    path: "{{ cat_dog_app_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Create PostgreSQL data directory
+  ansible.builtin.file:
+    path: "{{ postgres_data_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Copy Cat API source files
+  ansible.builtin.copy:
+    src: cat-api/
+    dest: "{{ cat_dog_app_directory }}/cat-api/"
+    owner: root
+    group: root
+    directory_mode: "0755"
+
+- name: Copy Dog API source files
+  ansible.builtin.copy:
+    src: dog-api/
+    dest: "{{ cat_dog_app_directory }}/dog-api/"
+    owner: root
+    group: root
+    directory_mode: "0755"
+
+- name: Create PostgreSQL initialization directory
+  ansible.builtin.file:
+    path: "{{ cat_dog_app_directory }}/postgres/init"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Copy PostgreSQL initialization scripts
+  ansible.builtin.copy:
+    src: postgres/init/
+    dest: "{{ cat_dog_app_directory }}/postgres/init/"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Deploy environment variables
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ cat_dog_app_directory }}/.env"
+    owner: root
+    group: root
+    mode: "0600"
+  no_log: true
+
+- name: Deploy Docker Compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ cat_dog_app_directory }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Start Cat and Dog application stack
+  ansible.builtin.command:
+    cmd: docker compose up -d --build
+    chdir: "{{ cat_dog_app_directory }}"

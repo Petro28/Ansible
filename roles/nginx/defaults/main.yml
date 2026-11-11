@@ -7,7 +7,7 @@ nginx_dog_root: /var/www/dog-site
 
 nginx_ssl_directory: /etc/nginx/ssl
 
-nginx_backend_host: 192.168.0.21
+nginx_backend_host: "{{ backend_ip }}"
 nginx_cat_api_port: 8080
 nginx_dog_api_port: 8081
 

@@ -6,11 +6,20 @@
     - common
     - firewall
 
-- name: Configure backend
+- name: Configure Docker on backend
   hosts: backend
   become: true
   roles:
     - docker
+
+  tasks:
+    - name: Apply Docker configuration before application deployment
+      ansible.builtin.meta: flush_handlers
+
+- name: Deploy Cat and Dog application
+  hosts: backend
+  become: true
+  roles:
     - cat_dog_app
 
 - name: Configure frontend
@@ -18,3 +27,4 @@
   become: true
   roles:
     - nginx
+

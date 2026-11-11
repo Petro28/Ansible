@@ -1,0 +1,8 @@
+---
+docker_firewall_api_rules:
+  - port: 8080
+    source: "{{ frontend_ip }}"
+    destination: "{{ backend_ip }}"
+  - port: 8081
+    source: "{{ frontend_ip }}"
+    destination: "{{ backend_ip }}"

@@ -1,0 +1,31 @@
+---
+- name: Configure Docker firewall rules on backend
+  when: inventory_hostname in groups['backend']
+  block:
+
+    - name: Install Docker firewall script
+      ansible.builtin.template:
+        src: docker-firewall.sh.j2
+        dest: /usr/local/sbin/docker-firewall.sh
+        owner: root
+        group: root
+        mode: "0750"
+      notify: Restart Docker firewall service
+
+    - name: Install Docker firewall systemd service
+      ansible.builtin.template:
+        src: docker-firewall.service.j2
+        dest: /etc/systemd/system/docker-firewall.service
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart Docker firewall service
+
+    - name: Apply firewall template changes
+      ansible.builtin.meta: flush_handlers
+
+    - name: Enable and start Docker firewall service
+      ansible.builtin.systemd_service:
+        name: docker-firewall.service
+        enabled: true
+        state: started

@@ -1,0 +1,17 @@
+---
+docker_apt_keyring: /etc/apt/keyrings/docker.asc
+
+docker_apt_arch: >-
+  {{ 'amd64' if ansible_architecture == 'x86_64'
+     else 'arm64' if ansible_architecture == 'aarch64'
+     else ansible_architecture }}
+
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+docker_dns_primary: "1.1.1.1"
+docker_dns_secondary: "8.8.8.8"

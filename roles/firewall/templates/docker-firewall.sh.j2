@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+{% for rule in docker_firewall_api_rules %}
+iptables -w -C DOCKER-USER \
+  -p tcp \
+  -s {{ rule.source }} \
+  -m conntrack \
+  --ctorigdst {{ rule.destination }} \
+  --ctorigdstport {{ rule.port }} \
+  -j ACCEPT 2>/dev/null || \
+iptables -w -I DOCKER-USER 2 \
+  -p tcp \
+  -s {{ rule.source }} \
+  -m conntrack \
+  --ctorigdst {{ rule.destination }} \
+  --ctorigdstport {{ rule.port }} \
+  -j ACCEPT
+{% endfor %}

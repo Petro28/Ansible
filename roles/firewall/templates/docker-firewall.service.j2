@@ -1,0 +1,13 @@
+[Unit]
+Description=Configure Docker firewall rules for Cat and Dog APIs
+Requires=docker.service
+After=docker.service
+PartOf=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/docker-firewall.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

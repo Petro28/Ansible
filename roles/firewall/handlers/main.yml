@@ -1,0 +1,6 @@
+---
+- name: Restart Docker firewall service
+  ansible.builtin.systemd_service:
+    name: docker-firewall.service
+    daemon_reload: true
+    state: restarted
