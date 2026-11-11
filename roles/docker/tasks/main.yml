@@ -21,15 +21,20 @@
     mode: "0644"
 
 - name: Add official Docker repository
-  ansible.builtin.apt_repository:
-    repo: >-
-      deb [arch={{ docker_apt_arch }}
-      signed-by={{ docker_apt_keyring }}]
-      https://download.docker.com/linux/ubuntu
-      {{ ansible_distribution_release }} stable
-    filename: docker
-    state: present
-    update_cache: true
+  ansible.builtin.deb822_repository:
+    name: docker
+    types:
+      - deb
+    uris:
+      - https://download.docker.com/linux/ubuntu
+    suites:
+      - "{{ ansible_facts['distribution_release'] }}"
+    components:
+      - stable
+    architectures:
+      - "{{ docker_apt_arch }}"
+    signed_by: "{{ docker_apt_keyring }}"
+    state: present 
 
 - name: Install Docker Engine and Compose plugin
   ansible.builtin.apt:

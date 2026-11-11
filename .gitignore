@@ -1,2 +1,9 @@
-# TLS private keys
-files/cat-dog-app/vm1/ssl/*.key
+# Ansible Vault-encrypted TLS private keys
+roles/files/frontend/ssl/*.key
+
+# Ansible
+*.retry
+
+# Python
+__pycache__/
+*.pyc

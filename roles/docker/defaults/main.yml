@@ -2,9 +2,9 @@
 docker_apt_keyring: /etc/apt/keyrings/docker.asc
 
 docker_apt_arch: >-
-  {{ 'amd64' if ansible_architecture == 'x86_64'
-     else 'arm64' if ansible_architecture == 'aarch64'
-     else ansible_architecture }}
+  {{ 'amd64' if ansible_facts['architecture'] == 'x86_64'
+     else 'arm64' if ansible_facts['architecture'] == 'aarch64'
+     else ansible_facts['architecture'] }}
 
 docker_packages:
   - docker-ce
