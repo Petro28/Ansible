@@ -8,7 +8,13 @@
 </head>
 <body>
   <main class="card">
-    <h1>Dog Generator</h1>
+    <nav class="site-navigation" aria-label="Main navigation">
+      <a href="https://{{ nginx_cat_hostname }}" class="nav-button active" aria-current="page">Cats</a>
+    </nav>
+
+    <h1>🐕 Dog Generator</h1>
+    <p>Press the button to get a random dog.</p>
+
     <button id="generate" type="button">Generate Dog</button>
 
     <section id="dog" hidden aria-live="polite">
@@ -19,6 +25,6 @@
     <p id="error" role="alert" hidden></p>
   </main>
 
-  <script src="app.js"></script>
+  <script src="/app.js"></script>
 </body>
 </html>

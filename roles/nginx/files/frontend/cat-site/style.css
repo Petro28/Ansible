@@ -1,24 +1,159 @@
-body {
-  max-width: 640px;
-  margin: 60px auto;
-  padding: 0 16px;
-  font-family: Arial, sans-serif;
-  line-height: 1.5;
+/* ===== General page styling ===== */
+
+* {
+    box-sizing: border-box;
 }
 
-button {
-  padding: 10px 16px;
-  font-size: 16px;
-  cursor: pointer;
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #ffe4e6, #ffedd5);
+    color: #3f2933;
 }
+
+/* ===== Main content card ===== */
+
+main {
+    width: 100%;
+    max-width: 520px;
+    padding: 40px 30px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 22px;
+    box-shadow: 0 12px 35px rgba(120, 53, 75, 0.15);
+}
+
+/* ===== Navigation ===== */
+
+.site-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 11px 26px;
+    border-radius: 10px;
+    background: #fce7f3;
+    color: #9d174d;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+.nav-button:hover {
+    background: #fbcfe8;
+    transform: translateY(-2px);
+}
+
+.nav-button.active {
+    background: #ec4899;
+    color: #ffffff;
+}
+
+/* ===== Headings and text ===== */
+
+h1 {
+    margin: 0 0 15px;
+    color: #be185d;
+    font-size: 32px;
+}
+
+main > p {
+    color: #78616b;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ===== Generate button ===== */
+
+#generate {
+    margin-top: 15px;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ec4899, #f97316);
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#generate:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 18px rgba(236, 72, 153, 0.3);
+}
+
+#generate:active {
+    transform: translateY(0);
+}
+
+/* ===== Generated cat result ===== */
 
 #result {
-  margin-top: 24px;
-  padding: 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+    margin-top: 30px;
+    padding: 22px;
+    border-radius: 16px;
+    background: #fff1f2;
+    border: 1px solid #fbcfe8;
 }
 
+#cat-name {
+    margin: 0 0 10px;
+    color: #be185d;
+    font-size: 24px;
+}
+
+#cat-description {
+    margin: 0;
+    color: #6b5260;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ===== Error message ===== */
+
 #error {
-  color: #b00020;
+    margin-top: 20px;
+    color: #dc2626;
+    font-weight: 600;
+}
+
+#error:empty {
+    display: none;
+}
+
+/* ===== Accessibility and responsive layout ===== */
+
+[hidden] {
+    display: none !important;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #9d174d;
+    outline-offset: 4px;
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    .nav-button {
+        padding: 10px 20px;
+    }
 }

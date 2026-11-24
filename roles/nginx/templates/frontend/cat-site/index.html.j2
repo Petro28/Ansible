@@ -4,16 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cat Generator</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main>
+    <nav class="site-navigation" aria-label="Main navigation">
+      <a href="https://{{ nginx_dog_hostname }}" class="nav-button active" aria-current="page">Dogs</a>
+    </nav>
+
     <h1>🐈 Cat Generator</h1>
     <p>Press the button to get a random cat.</p>
 
-    <button id="generate">Generate</button>
+    <button id="generate" type="button">Generate</button>
 
-    <section id="result" hidden>
+    <section id="result" hidden aria-live="polite">
       <h2 id="cat-name"></h2>
       <p id="cat-description"></p>
     </section>

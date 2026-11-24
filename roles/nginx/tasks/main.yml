@@ -1,4 +1,3 @@
-
 ---
 - name: Install pinned Nginx version
   ansible.builtin.apt:
@@ -27,7 +26,8 @@
     group: root
     mode: "0700"
 
-- name: Deploy cat frontend
+
+- name: Deploy cat frontend static assets
   ansible.builtin.copy:
     src: frontend/cat-site/
     dest: "{{ nginx_cat_root }}/"
@@ -35,13 +35,32 @@
     group: www-data
     mode: "0755"
 
-- name: Deploy dog frontend
+- name: Deploy dog frontend static assets
   ansible.builtin.copy:
     src: frontend/dog-site/
     dest: "{{ nginx_dog_root }}/"
     owner: www-data
     group: www-data
     mode: "0755"
+
+- name: Deploy cat frontend HTML template
+  ansible.builtin.template:
+    src: frontend/cat-site/index.html.j2
+    dest: "{{ nginx_cat_root }}/index.html"
+    owner: www-data
+    group: www-data
+    mode: "0644"
+  notify: Reload Nginx
+
+- name: Deploy dog frontend HTML template
+  ansible.builtin.template:
+    src: frontend/dog-site/index.html.j2
+    dest: "{{ nginx_dog_root }}/index.html"
+    owner: www-data
+    group: www-data
+    mode: "0644"
+  notify: Reload Nginx
+
 
 - name: Deploy TLS certificate
   ansible.builtin.copy:
