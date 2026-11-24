@@ -45,16 +45,16 @@
 
 - name: Deploy TLS certificate
   ansible.builtin.copy:
-    src: ssl/cats-dogs.crt
-    dest: "{{ nginx_ssl_directory }}/cats-dogs.crt"
+    src: ssl/cats-dogs-app.crt
+    dest: "{{ nginx_ssl_directory }}/cats-dogs-app.crt"
     owner: root
     group: root
     mode: "0644"
 
 - name: Deploy TLS private key
   ansible.builtin.copy:
-    src: "{{ playbook_dir }}/../roles/files/frontend/ssl/cats-dogs.key"
-    dest: "{{ nginx_ssl_directory }}/cats-dogs.key"
+    src: "{{ playbook_dir }}/../roles/files/frontend/ssl/cats-dogs-app.key"
+    dest: "{{ nginx_ssl_directory }}/cats-dogs-app.key"
     owner: root
     group: root
     mode: "0600"
@@ -72,8 +72,8 @@
 
 - name: Deploy Cat and Dog virtual hosts
   ansible.builtin.template:
-    src: cats-dogs.conf.j2
-    dest: /etc/nginx/conf.d/cats-dogs.conf
+    src: cats-dogs-app.conf.j2
+    dest: /etc/nginx/conf.d/cats-dogs-app.conf
     owner: root
     group: root
     mode: "0644"

@@ -12,8 +12,8 @@ server {
     root $site_root;
     index index.html;
 
-    ssl_certificate {{ nginx_ssl_directory }}/cats-dogs.crt;
-    ssl_certificate_key {{ nginx_ssl_directory }}/cats-dogs.key;
+    ssl_certificate {{ nginx_ssl_directory }}/cats-dogs-app.crt;
+    ssl_certificate_key {{ nginx_ssl_directory }}/cats-dogs-app.key;
 
     location / {
         try_files $uri $uri/ =404;
