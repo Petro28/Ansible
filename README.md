@@ -46,6 +46,6 @@ The inventory contains two managed hosts:
 - `server1` — frontend
 - `server2` — backend
 
-Shared variables are stored in `inventory/group_vars/all.yml`.
+Shared variables are stored in `inventory/inventory.ini`.
 
 Sensitive variables are stored in Ansible Vault.
