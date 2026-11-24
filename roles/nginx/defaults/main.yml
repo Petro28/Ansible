@@ -11,5 +11,5 @@ nginx_backend_host: "{{ backend_ip }}"
 nginx_cat_api_port: 8080
 nginx_dog_api_port: 8081
 
-nginx_cat_hostname: cats.example.local
-nginx_dog_hostname: dogs.example.local
+nginx_cat_hostname: cats.pmelnyk.top
+nginx_dog_hostname: dogs.pmelnyk.top
